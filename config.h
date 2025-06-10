@@ -8,8 +8,10 @@ static const unsigned int borderpx = 5; /* border pixel of windows */
 static const unsigned int snap = 32;    /* snap pixel */
 static const int showbar = 1;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
-static const char *fonts[] = {"JetBrainsMono Nerd Font:size=13"};
-static const char dmenufont[] = "monospace:size=15";
+static const char *fonts[] = {"Noto Sans:size=13",
+                              "JetBrainsMono Nerd Font:size=13",
+                              "Noto Color Emoji:size=15"};
+static const char dmenufont[] = "JetBrainsMono Nerd Font:size=13";
 static const char col_gray1[] = "#222222";
 static const char col_gray2[] = "#444444";
 static const char col_gray3[] = "#bbbbbb";
@@ -17,13 +19,13 @@ static const char col_gray4[] = "#eeeeee";
 static const char col_cyan[] = "#005577";
 static const char *colors[][3] = {
     /*               fg         bg         border   */
-    [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
+    [SchemeNorm] = {col_gray3, col_gray1, col_cyan},
     [SchemeSel] = {col_gray4, col_cyan, col_cyan},
 };
 
 /* tagging */
 static const char *tags[] = {" ", " ", " ", " ", "5",
-                             "6",   "7",   "8",   "9"};
+                             "6",    "7",    "8",    "9"};
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -33,7 +35,7 @@ static const Rule rules[] = {
     /* class      instance    title       tags mask     isfloating   monitor */
     {"Gimp", NULL, NULL, 0, 1, -1},
     {"ghostty", NULL, NULL, 1 << 0, 0, -1},
-    { "firefox_firefox",  NULL,       NULL,       1 << 1,       0, -1 },
+    {"firefox_firefox", NULL, NULL, 1 << 1, 0, -1},
 };
 
 /* layout(s) */
@@ -58,6 +60,10 @@ static const Layout layouts[] = {
       {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},               \
       {MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}},                        \
       {MODKEY | ControlMask | ShiftMask, KEY, toggletag, {.ui = 1 << TAG}},
+#define STACKKEYS(MOD, ACTION)                                                 \
+  {MOD, > XK_j, > ACTION##stack, > {.i = INC(+1)}},                            \
+      {MOD, > XK_k, > ACTION##stack, > {.i = INC(-1)}},                        \
+      {MOD, XK_v, ACTION##stack, {.i = 0}},
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd)                                                             \
@@ -76,7 +82,7 @@ static const char *termcmd[] = {"ghostty", NULL};
 static const Key keys[] = {
     /* modifier                     key        function        argument */
     {MODKEY, XK_w, spawn, {.v = (const char *[]){BROWSER, NULL}}},
-    {MODKEY | ShiftMask, XK_f, spawn, {.v = (const char *[]){FALKON, NULL}}},
+    // {MODKEY | ShiftMask, XK_f, spawn, {.v = (const char *[]){FALKON, NULL}}},
     /* { MODKEY,                    XK_s,      togglesticky,   {0} }, */
     {MODKEY, XK_d, spawn, {.v = dmenucmd}},
     {MODKEY | ShiftMask, XK_Return, spawn, {.v = termcmd}},
@@ -92,7 +98,7 @@ static const Key keys[] = {
     {MODKEY, XK_q, killclient, {0}},
     {MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
     {MODKEY, XK_f, setlayout, {.v = &layouts[1]}},
-    {MODKEY, XK_u, setlayout, {.v = &layouts[2]}},
+    {MODKEY, XK_m, setlayout, {.v = &layouts[2]}},
     /*{ MODKEY,                       XK_space,  setlayout,      {0} },*/
     {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
     {MODKEY, XK_0, view, {.ui = ~0}},
