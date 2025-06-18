@@ -5,6 +5,11 @@
 
 /* appearance */
 static const unsigned int borderpx = 5; /* border pixel of windows */
+static const unsigned int barpadv	= 7;		/* Vertical padding: how far the bar is from the top */
+static const unsigned int barpadh	= 15;		/* Horizontal padding: how far the bar is from each side */
+static const unsigned int barheight	= 3;		/* Bar height: How long the bar is vertically */
+static const unsigned int barborder	= 5;		/* bar vertical padding (from top)*/
+static const unsigned int floatbar	= 1;		/* 0 means bar won't float; float or dock the bar */
 static const unsigned int snap = 32;    /* snap pixel */
 static const int showbar = 1;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
@@ -22,6 +27,7 @@ static const char *colors[][3] = {
     /*               fg         bg         border   */
     [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
     [SchemeSel] = {col_gray4, col_border, col_cyan},
+	[SchemeBar]  = { NULL, 		NULL,	   col_cyan  },
 };
 
 /* tagging */
