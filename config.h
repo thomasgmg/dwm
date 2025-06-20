@@ -13,6 +13,8 @@ static const unsigned int floatbar	= 1;		/* 0 means bar won't float; float or do
 static const unsigned int snap = 32;    /* snap pixel */
 static const int showbar = 1;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
+#define ICONSIZE 16   /* icon size */
+#define ICONSPACING 5 /* space between icon and title */
 static const char *fonts[] = {"Noto Sans:size=13",
                               "JetBrainsMono Nerd Font:size=13",
                               "Noto Color Emoji:size=13"};
