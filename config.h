@@ -11,6 +11,11 @@ static const unsigned int barheight	= 3;		/* Bar height: How long the bar is ver
 static const unsigned int barborder	= 5;		/* bar vertical padding (from top)*/
 static const unsigned int floatbar	= 1;		/* 0 means bar won't float; float or dock the bar */
 static const unsigned int snap = 32;    /* snap pixel */
+static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 30;       /* vert outer gap between windows and screen edge */
+static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar = 1;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
 #define ICONSIZE 16   /* icon size */
@@ -55,18 +60,28 @@ static const int resizehints =
 static const int lockfullscreen =
     1; /* 1 will force focus on the fullscreen window */
 
-#include "grid.c"
-#include "fibonacci.c"
+#define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
+#include "vanitygaps.c"
+
+// #include "grid.c"
+// #include "fibonacci.c"
 static const Layout layouts[] = {
     /* symbol     arrange function */
     {"[]=", tile}, /* first entry is default */
-    {"><>", NULL}, /* no layout function means floating behavior */
+    // {"><>", NULL}, /* no layout function means floating behavior */
     {"🔭 ", monocle},
-    {" 󱇚  ", grid},
-	{ "|M|",      centeredmaster },
-	{ "<M>",      centeredfloatingmaster },
  	{ "[🐚]",      spiral },
  	{ "[ ]",      dwindle },
+	{ "H[]",      deck },
+	{ "TTT",      bstack },
+	{ "===",      bstackhoriz },
+    {" 󱇚  ", grid},
+	{ "###",      nrowgrid },
+	{ "---",      horizgrid },
+	{ ":::",      gaplessgrid },
+	{ "|M|",      centeredmaster },
+	{ "<M>",      centeredfloatingmaster },
+	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ NULL,       NULL },
 };
 
@@ -111,6 +126,22 @@ static const Key keys[] = {
     { MODKEY,               XK_h,                  setmfact,        {.f = -0.05}},
     { MODKEY,               XK_l,                  setmfact,        {.f = +0.05}},
     { MODKEY,               XK_space,              zoom,            {0}},
+	{ MODKEY|Mod4Mask,              XK_u,      incrgaps,       {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_u,      incrgaps,       {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_i,      incrigaps,      {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_i,      incrigaps,      {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_o,      incrogaps,      {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_o,      incrogaps,      {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_6,      incrihgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_6,      incrihgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_7,      incrivgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_7,      incrivgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_8,      incrohgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_8,      incrohgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_9,      incrovgaps,     {.i = +1 } },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },
+	{ MODKEY|Mod4Mask,              XK_0,      togglegaps,     {0} },
+	{ MODKEY|Mod4Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
     { MODKEY,               XK_Tab,                view,            {0}},
     { MODKEY,               XK_q,                  killclient,      {0}},
     { MODKEY,               XK_t,                  setlayout,       {.v = &layouts[0]}},
