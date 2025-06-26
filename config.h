@@ -1,8 +1,11 @@
 /* See LICENSE file for copyright and license details. */
 
 #include <X11/X.h>
+
 #define BROWSER "firefox"
 #define FALKON "falkon"
+
+ #define TERMINAL "ghostty"
 
 /* appearance */
 static const unsigned int borderpx = 5; /* border pixel of windows */
@@ -38,6 +41,21 @@ static const char *colors[][3] = {
 	[SchemeBar]  = { NULL, 		NULL,	   col_cyan  },
 };
 
+typedef struct {
+	const char *name;
+	const void *cmd;
+} Sp;
+// const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--title=spterm", "--window-height=15", "--window-width=70", NULL };
+// const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
+// const char *spcmd3[] = {"keepassxc", NULL };
+static Sp scratchpads[] = {
+	/* name          cmd  */
+	{"spterm",      spcmd1},
+	// {"spranger",    spcmd2},
+	// {"keepassxc",   spcmd3},
+};
+
 /* tagging */
 static const char *tags[] = {" ", " ", " ", " ", "🥶",
                              "👻",   "👾",   "😴",   "🌀"};
@@ -48,9 +66,11 @@ static const Rule rules[] = {
      *	WM_NAME(STRING) = title
      */
     /* class      instance    title       tags mask     isfloating   monitor */
-    {"Gimp", NULL, NULL, 0, 1, -1},
-    {"ghostty", NULL, NULL, 1 << 0, 0, -1},
-    {"firefox_firefox", NULL, NULL, 1 << 1, 0, -1},
+	{ "Gimp",	  NULL,			NULL,		0,				1,			 -1 },
+	{ "Firefox",  NULL,			NULL,		1 << 8,			0,			 -1 },
+	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
+	// { NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
+	// { NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
 };
 
 /* layout(s) */
@@ -166,6 +186,9 @@ static const Key keys[] = {
     {MODKEY,                        XK_Right,              focusmon,        {.i = +1}},
     {MODKEY|ShiftMask,              XK_Left,               tagmon,          {.i = -1}},
     {MODKEY|ShiftMask,              XK_Right,              tagmon,          {.i = +1}},
+	{ MODKEY,            			XK_Return,  	               togglescratch,   {.ui = 0 } },
+	// { MODKEY,            			XK_u,	               togglescratch,   {.ui = 1 } },
+	// { MODKEY,            			XK_x,	               togglescratch,   {.ui = 2 } },
     TAGKEYS(XK_1,                   0) TAGKEYS(XK_2,       1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4,                3)
     TAGKEYS(XK_5,                   4) TAGKEYS(XK_6,       5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8,                7)
     TAGKEYS(XK_9,                   8){MODKEY | ShiftMask, XK_q,            quit,                           {0}},
@@ -176,15 +199,15 @@ static const Key keys[] = {
  * ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
     /* click                event mask      button          function argument */
-    {ClkLtSymbol, 0, Button1, setlayout, {0}},
-    {ClkLtSymbol, 0, Button3, setlayout, {.v = &layouts[2]}},
-    {ClkWinTitle, 0, Button2, zoom, {0}},
-    {ClkStatusText, 0, Button2, spawn, {.v = termcmd}},
-    {ClkClientWin, MODKEY, Button1, movemouse, {0}},
-    {ClkClientWin, MODKEY, Button2, togglefloating, {0}},
-    {ClkClientWin, MODKEY, Button3, resizemouse, {0}},
-    {ClkTagBar, 0, Button1, view, {0}},
-    {ClkTagBar, 0, Button3, toggleview, {0}},
-    {ClkTagBar, MODKEY, Button1, tag, {0}},
-    {ClkTagBar, MODKEY, Button3, toggletag, {0}},
+    {ClkLtSymbol,   0,      Button1, setlayout,      {0}},
+    {ClkLtSymbol,   0,      Button3, setlayout,      {.v = &layouts[2]}},
+    {ClkWinTitle,   0,      Button2, zoom,           {0}},
+    {ClkStatusText, 0,      Button2, spawn,          {.v = termcmd}},
+    {ClkClientWin,  MODKEY, Button1, movemouse,      {0}},
+    {ClkClientWin,  MODKEY, Button2, togglefloating, {0}},
+    {ClkClientWin,  MODKEY, Button1, resizemouse,    {0}},
+    {ClkTagBar,     0,      Button1, view,           {0}},
+    {ClkTagBar,     0,      Button3, toggleview,     {0}},
+    {ClkTagBar,     MODKEY, Button1, tag,            {0}},
+    {ClkTagBar,     MODKEY, Button3, toggletag,      {0}},
 };

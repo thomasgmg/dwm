@@ -52,14 +52,17 @@
   (mask & ~(numlockmask | LockMask) &                                          \
    (ShiftMask | ControlMask | Mod1Mask | Mod2Mask | Mod3Mask | Mod4Mask |      \
     Mod5Mask))
-#define INTERSECT(x, y, w, h, m)                                               \
-  (MAX(0, MIN((x) + (w), (m)->wx + (m)->ww) - MAX((x), (m)->wx)) *             \
-   MAX(0, MIN((y) + (h), (m)->wy + (m)->wh) - MAX((y), (m)->wy)))
+#define INTERSECT(x,                        y,             w,                            h, m)                                               \
+  (MAX(0,                                   MIN((x) + (w), (m)->wx + (m)->ww) - MAX((x), (m)->wx)) *             \
+   MAX(0,                                   MIN((y) + (h), (m)->wy + (m)->wh) - MAX((y), (m)->wy)))
 #define ISVISIBLE(C) ((C->tags & C->mon->tagset[C->mon->seltags]))
 #define MOUSEMASK (BUTTONMASK | PointerMotionMask)
 #define WIDTH(X) ((X)->w + 2 * (X)->bw)
 #define HEIGHT(X) ((X)->h + 2 * (X)->bw)
-#define TAGMASK ((1 << LENGTH(tags)) - 1)
+#define NUMTAGS (LENGTH(tags) + LENGTH(scratchpads))
+#define TAGMASK ((1 << NUMTAGS) - 1)
+#define SPTAG(i) ((1 << LENGTH(tags)) << (i))
+#define SPTAGMASK (((1 << LENGTH(scratchpads)) - 1) << LENGTH(tags))
 #define TEXTW(X) (drw_fontset_getwidth(drw, (X)) + lrpad)
 
 /* enums */
@@ -248,6 +251,7 @@ static void tagmon(const Arg *arg);
 // static void tile(Monitor *m);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void togglescratch(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void freeicon(Client *c);
@@ -338,6 +342,11 @@ void applyrules(Client *c) {
         (!r->instance || strstr(instance, r->instance))) {
       c->isfloating = r->isfloating;
       c->tags |= r->tags;
+      if ((r->tags & SPTAGMASK) && r->isfloating) {
+        c->x = c->mon->wx + (c->mon->ww / 2 - WIDTH(c) / 2);
+        c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
+      }
+
       for (m = mons; m && m->num != r->monitor; m = m->next)
         ;
       if (m)
@@ -348,8 +357,8 @@ void applyrules(Client *c) {
     XFree(ch.res_class);
   if (ch.res_name)
     XFree(ch.res_name);
-  c->tags =
-      c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
+  c->tags = c->tags & TAGMASK ? c->tags & TAGMASK
+                              : (c->mon->tagset[c->mon->seltags] & ~SPTAGMASK);
 }
 
 int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact) {
@@ -1707,6 +1716,10 @@ void showhide(Client *c) {
   if (!c)
     return;
   if (ISVISIBLE(c)) {
+    if ((c->tags & SPTAGMASK) && c->isfloating) {
+      c->x = c->mon->wx + (c->mon->ww / 2 - WIDTH(c) / 2);
+      c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
+    }
     /* show clients top down */
     XMoveWindow(dpy, c->win, c->x, c->y);
     if ((!c->mon->lt[c->mon->sellt]->arrange || c->isfloating) &&
@@ -1801,6 +1814,31 @@ void togglefloating(const Arg *arg) {
     resize(selmon->sel, selmon->sel->x, selmon->sel->y, selmon->sel->w,
            selmon->sel->h, 0);
   arrange(selmon);
+}
+
+void togglescratch(const Arg *arg) {
+  Client *c;
+  unsigned int found = 0;
+  unsigned int scratchtag = SPTAG(arg->ui);
+  Arg sparg = {.v = scratchpads[arg->ui].cmd};
+
+  for (c = selmon->clients; c && !(found = c->tags & scratchtag); c = c->next)
+    ;
+  if (found) {
+    unsigned int newtagset = selmon->tagset[selmon->seltags] ^ scratchtag;
+    if (newtagset) {
+      selmon->tagset[selmon->seltags] = newtagset;
+      focus(NULL);
+      arrange(selmon);
+    }
+    if (ISVISIBLE(c)) {
+      focus(c);
+      restack(selmon);
+    }
+  } else {
+    selmon->tagset[selmon->seltags] |= scratchtag;
+    spawn(&sparg);
+  }
 }
 
 void toggletag(const Arg *arg) {
@@ -2252,8 +2290,8 @@ int main(int argc, char *argv[]) {
 //       /* nmaster clients are stacked vertically, in the center
 //        * of the screen */
 //       h = (m->wh - my) / (MIN(n, m->nmaster) - i);
-//       resize(c, m->wx + mx, m->wy + my, mw - (2 * c->bw), h - (2 * c->bw), 0);
-//       my += HEIGHT(c);
+//       resize(c, m->wx + mx, m->wy + my, mw - (2 * c->bw), h - (2 * c->bw),
+//       0); my += HEIGHT(c);
 //     } else {
 //       /* stack clients are stacked vertically */
 //       if ((i - m->nmaster) % 2) {
@@ -2304,8 +2342,8 @@ int main(int argc, char *argv[]) {
 //       /* nmaster clients are stacked horizontally, in the center
 //        * of the screen */
 //       w = (mw + mxo - mx) / (MIN(n, m->nmaster) - i);
-//       resize(c, m->wx + mx, m->wy + my, w - (2 * c->bw), mh - (2 * c->bw), 0);
-//       mx += WIDTH(c);
+//       resize(c, m->wx + mx, m->wy + my, w - (2 * c->bw), mh - (2 * c->bw),
+//       0); mx += WIDTH(c);
 //     } else {
 //       /* stack clients are stacked horizontally */
 //       w = (m->ww - tx) / (n - i);
