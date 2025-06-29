@@ -12,7 +12,7 @@ static const unsigned int borderpx = 5; /* border pixel of windows */
 static const unsigned int barpadv	= 7;		/* Vertical padding: how far the bar is from the top */
 static const unsigned int barpadh	= 15;		/* Horizontal padding: how far the bar is from each side */
 static const unsigned int barheight	= 3;		/* Bar height: How long the bar is vertically */
-static const unsigned int barborder	= 5;		/* bar vertical padding (from top)*/
+static const unsigned int barborder	= 3;		/* bar vertical padding (from top)*/
 static const unsigned int floatbar	= 1;		/* 0 means bar won't float; float or dock the bar */
 static const unsigned int snap = 32;    /* snap pixel */
 static const unsigned int gappih    = 20;       /* horiz inner gap between windows */
@@ -32,7 +32,7 @@ static const char col_gray1[] = "#222222";
 static const char col_gray2[] = "#444444";
 static const char col_gray3[] = "#bbbbbb";
 static const char col_gray4[] = "#eeeeee";
-static const char col_cyan[] = "#770000";
+static const char col_cyan[] = "#6a5acd";
 static const char col_border[] = "#005577";
 static const char *colors[][3] = {
     /*               fg         bg         border   */
