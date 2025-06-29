@@ -24,10 +24,10 @@ static const int showbar = 1;           /* 0 means no bar */
 static const int topbar = 1;            /* 0 means bottom bar */
 #define ICONSIZE 16   /* icon size */
 #define ICONSPACING 5 /* space between icon and title */
-static const char *fonts[] = {"Noto Sans:size=13",
-                              "JetBrainsMono Nerd Font:size=13",
-                              "Noto Color Emoji:size=13"};
-static const char dmenufont[] = "JetBrainsMono Nerd Font:size=13";
+static const char *fonts[] = {"Noto Sans:size=12",
+                              "JetBrainsMono Nerd Font:size=12",
+                              "Noto Color Emoji:size=12"};
+static const char dmenufont[] = "JetBrainsMono Nerd Font:size=12";
 static const char col_gray1[] = "#222222";
 static const char col_gray2[] = "#444444";
 static const char col_gray3[] = "#bbbbbb";
@@ -47,11 +47,13 @@ typedef struct {
 } Sp;
 // const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
 const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--title=spterm", "--window-height=15", "--window-width=70", NULL };
+const char *spcmd2[] = {"cool-retro-term", NULL };
 // const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
 // const char *spcmd3[] = {"keepassxc", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
+    {"cool-retro-term", spcmd2}
 	// {"spranger",    spcmd2},
 	// {"keepassxc",   spcmd3},
 };
@@ -144,8 +146,8 @@ static const Key keys[] = {
     { MODKEY,                       XK_k,                  focusstack,      {.i = -1}},
     { MODKEY,                       XK_o,                  incnmaster,      {.i = +1}},
     { MODKEY|ShiftMask,             XK_o,                  incnmaster,      {.i = -1}},
-    { MODKEY,                       XK_h,                  setmfact,        {.f = -0.05}},
-    { MODKEY,                       XK_l,                  setmfact,        {.f = +0.05}},
+    { MODKEY,                       XK_Left,               setmfact,        {.f = -0.05}},
+    { MODKEY,                       XK_Right,              setmfact,        {.f = +0.05}},
     { MODKEY,                       XK_space,              zoom,            {0}},
 	{ MODKEY|ControlMask,           XK_u,                  incrgaps,        {.i = +1 } },
 	{ MODKEY|ControlMask|ShiftMask, XK_u,                  incrgaps,        {.i = -1 } },
@@ -182,11 +184,12 @@ static const Key keys[] = {
     {MODKEY|ShiftMask,              XK_space,              togglefloating,  {0}},
     {MODKEY,                        XK_0,                  view,            {.ui = ~0}},
     {MODKEY|ShiftMask,              XK_0,                  tag,             {.ui = ~0}},
-    {MODKEY,                        XK_Left,               focusmon,        {.i = -1}},
-    {MODKEY,                        XK_Right,              focusmon,        {.i = +1}},
-    {MODKEY|ShiftMask,              XK_Left,               tagmon,          {.i = -1}},
-    {MODKEY|ShiftMask,              XK_Right,              tagmon,          {.i = +1}},
-	{ MODKEY,            			XK_Return,  	               togglescratch,   {.ui = 0 } },
+    {MODKEY,                        XK_h,               focusmon,        {.i = -1}},
+    {MODKEY,                        XK_l,              focusmon,        {.i = +1}},
+    {MODKEY|ShiftMask,              XK_l,               tagmon,          {.i = -1}},
+    {MODKEY|ShiftMask,              XK_h,              tagmon,          {.i = +1}},
+	{ MODKEY,            			XK_Return,             togglescratch,   {.ui = 0 } },
+	{ MODKEY|ControlMask,           XK_c,  	               togglescratch,   {.ui = 1 } },
 	// { MODKEY,            			XK_u,	               togglescratch,   {.ui = 1 } },
 	// { MODKEY,            			XK_x,	               togglescratch,   {.ui = 2 } },
     TAGKEYS(XK_1,                   0) TAGKEYS(XK_2,       1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4,                3)
