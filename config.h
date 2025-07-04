@@ -50,15 +50,15 @@ typedef struct {
 const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--title=spterm", "--window-height=15", "--window-width=70", NULL };
 const char *spcmd2[] = {"cool-retro-term", NULL };
 const char *spcmd3[] = {TERMINAL, "--x11-instance-name=spyazi", "--title=spyazi", "--window-height=25", "--window-width=100","-e", "yazi", NULL };
-// const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
-// const char *spcmd3[] = {"keepassxc", NULL };
+const char *spcmd4[] = {TERMINAL, "--x11-instance-name=sp-tty-clock", "--title=sp-tty-clock", "--window-height=10", "--window-width=35","-e", "tty-clock", NULL };
+const char *spcmd5[] = {TERMINAL, "--x11-instance-name=sp-hollywood", "--title=sp-hollywood", "-e", "hollywood", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
     {"cool-retro-term", spcmd2},
     {"spyazi", spcmd3},
-	// {"spranger",    spcmd2},
-	// {"keepassxc",   spcmd3},
+    {"sp-tty-clock", spcmd4},
+    {"sp-hollywood", spcmd5},
 };
 
 /* tagging */
@@ -71,11 +71,11 @@ static const Rule rules[] = {
      *	WM_NAME(STRING) = title
      */
     /* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",	  NULL,			NULL,		0,				1,			 -1 },
-	{ "Firefox",  NULL,			NULL,		1 << 8,			0,			 -1 },
-	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
-	{ NULL,		  "spyazi",		NULL,		SPTAG(2),		1,			 -1 },
-	// { NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
+	{ "Gimp",    NULL,           NULL, 0,        1, -1 },
+	{ "Firefox", NULL,           NULL, 1 << 8,   0, -1 },
+	{ NULL,      "spterm",       NULL, SPTAG(0), 1, -1 },
+	{ NULL,      "spyazi",       NULL, SPTAG(2), 1, -1 },
+	{ NULL,      "sp-tty-clock", NULL, SPTAG(3), 1, -1 },
 };
 
 /* layout(s) */
@@ -212,7 +212,9 @@ static const Key keys[] = {
     {MODKEY|ShiftMask,              XK_h,                    tagmon,          {.i = +1}},
 	{MODKEY,                        XK_Return,               togglescratch,   {.ui = 0 } },
 	{MODKEY|ControlMask,            XK_c,                    togglescratch,   {.ui = 1 } },
-	{MODKEY|ControlMask,            XK_d,                    togglescratch,   {.ui = 2 } },
+	{MODKEY|ControlMask,            XK_y,                    togglescratch,   {.ui = 2 } },
+	{MODKEY|ControlMask,            XK_t,                    togglescratch,   {.ui = 3 } },
+	{MODKEY|ControlMask,            XK_h,                    togglescratch,   {.ui = 4 } },
     TAGKEYS(XK_1,                   0) TAGKEYS(XK_2,         1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4,                3)
     TAGKEYS(XK_5,                   4) TAGKEYS(XK_6,         5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8,                7)
     TAGKEYS(XK_9,                   8){MODKEY | ShiftMask,   XK_q,            quit,                           {0}},
