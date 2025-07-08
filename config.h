@@ -93,22 +93,21 @@ static const int lockfullscreen =
 // #include "fibonacci.c"
 static const Layout layouts[] = {
     /* symbol     arrange function */
-    {" ",     tile},  /* first entry is default */
-    // {"><>", NULL},  /* no layout function means floating behavior */
-    {"🔭 ",    monocle},
- 	{ "[🐚]",  spiral },
- 	{ "[ ]",  dwindle },
-	{ "[ ]",  deck },
-	{ "[ ]",  bstack },
+    { "  ",   tile},  /* first entry is default */
+    { "🔭 ",   monocle},
+ 	{ "🐚 ",   spiral },
+ 	{ "🌪️ ",   dwindle },
+	{ "🃏 ",   deck },
+	{ "  ",   bstack },
 	{ "===",   bstackhoriz },
-    {" 󱇚  ",   grid},
+    { " 󱇚 ",   grid},
 	{ "###",   nrowgrid },
 	{ "---",   horizgrid },
 	{ ":::",   gaplessgrid },
 	{ "|M|",   centeredmaster },
-	{ "<M>",   centeredfloatingmaster },
+	{ "  ",   centeredfloatingmaster },
 	{ "><>",   NULL }, /* no layout function means floating behavior */
-	{ NULL,    NULL },
+	{  NULL,   NULL },
 };
 
 /* key definitions */
@@ -142,6 +141,7 @@ static const Key keys[] = {
     { 0,                            XF86XK_AudioRaiseVolume, spawn,           {.v = volupcmd } },
     { 0,                            XF86XK_AudioLowerVolume, spawn,           {.v = voldowncmd } },
     { 0,                            XF86XK_AudioMute,        spawn,           {.v = volmutecmd } },
+    { 0,                            XK_Print,                spawn,           SHCMD("maim ~/Pictures/ricing.png")},
     {MODKEY,                        XK_w,                    spawn,           {.v = (const char *[]){BROWSER, NULL}}},
     // {MODKEY | ShiftMask,         XK_f,                    spawn,           {.v = (const char *[]){FALKON,  NULL}}},
     /* { MODKEY,                    XK_s,                    togglesticky,    {0} },                          */
