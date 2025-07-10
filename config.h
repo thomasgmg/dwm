@@ -50,7 +50,7 @@ typedef struct {
 const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--title=spterm", "--window-height=15", "--window-width=70", NULL };
 const char *spcmd2[] = {"cool-retro-term", NULL };
 const char *spcmd3[] = {TERMINAL, "--x11-instance-name=spyazi", "--title=spyazi", "--window-height=25", "--window-width=100","-e", "yazi", NULL };
-const char *spcmd4[] = {TERMINAL, "--x11-instance-name=sp-tty-clock", "--title=sp-tty-clock", "--window-height=10", "--window-width=35","-e", "tty-clock", NULL };
+const char *spcmd4[] = {TERMINAL, "--x11-instance-name=sp-tty-clock", "--title=sp-tty-clock", "--window-height=10", "--window-width=38","-e", "tty-clock", NULL };
 const char *spcmd5[] = {TERMINAL, "--x11-instance-name=sp-hollywood", "--title=sp-hollywood", "-e", "hollywood", NULL };
 const char *spcmd6[] = {TERMINAL, "--x11-instance-name=conky", "--title=conky", "-e", "conky", NULL };
 static Sp scratchpads[] = {
