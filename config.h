@@ -52,6 +52,7 @@ const char *spcmd2[] = {"cool-retro-term", NULL };
 const char *spcmd3[] = {TERMINAL, "--x11-instance-name=spyazi", "--title=spyazi", "--window-height=25", "--window-width=100","-e", "yazi", NULL };
 const char *spcmd4[] = {TERMINAL, "--x11-instance-name=sp-tty-clock", "--title=sp-tty-clock", "--window-height=10", "--window-width=35","-e", "tty-clock", NULL };
 const char *spcmd5[] = {TERMINAL, "--x11-instance-name=sp-hollywood", "--title=sp-hollywood", "-e", "hollywood", NULL };
+const char *spcmd6[] = {TERMINAL, "--x11-instance-name=conky", "--title=conky", "-e", "conky", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
@@ -59,6 +60,7 @@ static Sp scratchpads[] = {
     {"spyazi", spcmd3},
     {"sp-tty-clock", spcmd4},
     {"sp-hollywood", spcmd5},
+    {"conky", spcmd6},
 };
 
 /* tagging */
@@ -70,12 +72,13 @@ static const Rule rules[] = {
      *	WM_CLASS(STRING) = instance, class
      *	WM_NAME(STRING) = title
      */
-    /* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",    NULL,           NULL, 0,        1, -1 },
-	{ "Firefox", NULL,           NULL, 1 << 8,   0, -1 },
-	{ NULL,      "spterm",       NULL, SPTAG(0), 1, -1 },
-	{ NULL,      "spyazi",       NULL, SPTAG(2), 1, -1 },
-	{ NULL,      "sp-tty-clock", NULL, SPTAG(3), 1, -1 },
+    /* class      instance        title       tags mask     isfloating   monitor */
+	{ "Gimp",     NULL,           NULL,       0,            1,           -1 },
+	{ "Firefox",  NULL,           NULL,       1 << 8,       0,           -1 },
+	{ NULL,       "spterm",       NULL,       SPTAG(0),     1,           -1 },
+	{ NULL,       "spyazi",       NULL,       SPTAG(2),     1,           -1 },
+	{ NULL,       "sp-tty-clock", NULL,       SPTAG(3),     1,           -1 },
+	{ NULL,       "conky",        NULL,       SPTAG(5),     1,           -1 },
 };
 
 /* layout(s) */
@@ -95,8 +98,8 @@ static const Layout layouts[] = {
     /* symbol     arrange function */
     { "  ",   tile},  /* first entry is default */
     { "🔭 ",   monocle},
- 	{ "🐚 ",   spiral },
- 	{ "🌪️ ",   dwindle },
+    { "🐚 ",   spiral },
+    { "🌪️ ",   dwindle },
 	{ "🃏 ",   deck },
 	{ "  ",   bstack },
 	{ "===",   bstackhoriz },
@@ -137,7 +140,7 @@ static const char *voldowncmd[] = {"wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@"
 static const char *volmutecmd[] = {"wpctl", "set-mute",   "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
 
 static const Key keys[] = {
-    /* modifier                     key        function        argument */
+    /* modifier                     key                      function         argument */
     { 0,                            XF86XK_AudioRaiseVolume, spawn,           {.v = volupcmd } },
     { 0,                            XF86XK_AudioLowerVolume, spawn,           {.v = voldowncmd } },
     { 0,                            XF86XK_AudioMute,        spawn,           {.v = volmutecmd } },
@@ -173,17 +176,16 @@ static const Key keys[] = {
 	{ MODKEY|ControlMask|ShiftMask, XK_0,                    defaultgaps,     {0} },
     { MODKEY,                       XK_Tab,                  view,            {0}},
     { MODKEY,                       XK_q,                    killclient,      {0}},
-    { MODKEY,                       XK_t,                    setlayout,       {.v = &layouts[0]}},
+    // { MODKEY,                    XK_t,                    setlayout,       {.v = &layouts[0]}},
     { MODKEY,                       XK_m,                    setlayout,       {.v = &layouts[1]}},
-    { MODKEY,                       XK_r,                    setlayout,       {.v = &layouts[2]}},
-    { MODKEY|ShiftMask,             XK_r,                    setlayout,       {.v = &layouts[3]}},
-    { MODKEY,                       XK_d,                    setlayout,       {.v = &layouts[4]}},
-    { MODKEY,                       XK_g,                    setlayout,       {.v = &layouts[7]}},
-    { MODKEY|ShiftMask,             XK_g,                    setlayout,       {.v = &layouts[10]}},
-    { MODKEY,                       XK_c,                    setlayout,       {.v = &layouts[11]}},
-    { MODKEY|ShiftMask,             XK_c,                    setlayout,       {.v = &layouts[12]}},
-	{ MODKEY,                       XK_r,                    setlayout,       {.v = &layouts[6]} },
-	{ MODKEY|ShiftMask,             XK_r,                    setlayout,       {.v = &layouts[7]} },
+	//    { MODKEY,                 XK_r,                    setlayout,       {.v = &layouts[2]}},
+	//    { MODKEY|ShiftMask,       XK_r,                    setlayout,       {.v = &layouts[3]}},
+	//    { MODKEY,                 XK_d,                    setlayout,       {.v = &layouts[4]}},
+	// { MODKEY,                    XK_r,                    setlayout,       {.v = &layouts[6]} },
+	//    { MODKEY,                 XK_g,                    setlayout,       {.v = &layouts[7]}},
+	//    { MODKEY|ShiftMask,       XK_g,                    setlayout,       {.v = &layouts[10]}},
+	//    { MODKEY,                 XK_c,                    setlayout,       {.v = &layouts[11]}},
+	//    { MODKEY|ShiftMask,       XK_c,                    setlayout,       {.v = &layouts[12]}},
 	{ MODKEY|ControlMask,           XK_comma,                cyclelayout,     {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period,               cyclelayout,     {.i = +1 } },
     /*{ MODKEY,                     XK_space,                setlayout,       {0}},                           */
@@ -215,6 +217,7 @@ static const Key keys[] = {
 	{MODKEY|ControlMask,            XK_y,                    togglescratch,   {.ui = 2 } },
 	{MODKEY|ControlMask,            XK_t,                    togglescratch,   {.ui = 3 } },
 	{MODKEY|ControlMask,            XK_h,                    togglescratch,   {.ui = 4 } },
+	{MODKEY,                        XK_c,                    togglescratch,   {.ui = 5 } },
     TAGKEYS(XK_1,                   0) TAGKEYS(XK_2,         1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4,                3)
     TAGKEYS(XK_5,                   4) TAGKEYS(XK_6,         5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8,                7)
     TAGKEYS(XK_9,                   8){MODKEY | ShiftMask,   XK_q,            quit,                           {0}},
