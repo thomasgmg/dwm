@@ -138,14 +138,16 @@ static const char *termcmd[] = {"ghostty",               NULL};
 static const char *volupcmd[] = {"wpctl",   "set-volume", "@DEFAULT_AUDIO_SINK@", "0.05+",  NULL };
 static const char *voldowncmd[] = {"wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "0.05-",  NULL };
 static const char *volmutecmd[] = {"wpctl", "set-mute",   "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
+static const char *matrix_cmd[] = {"cmatrix", "-f", NULL };
 
 static const Key keys[] = {
     /* modifier                     key                      function         argument */
     { 0,                            XF86XK_AudioRaiseVolume, spawn,           {.v = volupcmd } },
     { 0,                            XF86XK_AudioLowerVolume, spawn,           {.v = voldowncmd } },
     { 0,                            XF86XK_AudioMute,        spawn,           {.v = volmutecmd } },
+    { MODKEY|ControlMask,           XK_m,                    spawn,           {.v = matrix_cmd } },
     { 0,                            XK_Print,                spawn,           SHCMD("maim ~/Pictures/ricing.png")},
-    {MODKEY,                        XK_w,                    spawn,           {.v = (const char *[]){BROWSER, NULL}}},
+    { MODKEY,                       XK_w,                    spawn,           {.v = (const char *[]){BROWSER, NULL}}},
     // {MODKEY | ShiftMask,         XK_f,                    spawn,           {.v = (const char *[]){FALKON,  NULL}}},
     /* { MODKEY,                    XK_s,                    togglesticky,    {0} },                          */
     // { MODKEY,                    XK_d,                    spawn,           {.v = dmenucmd}},
