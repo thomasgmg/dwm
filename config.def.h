@@ -47,6 +47,7 @@ static const Layout layouts[] = {
 	{ "  ",      tile },    /* first entry is default */
 	{ " 󰏝 ",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ NULL,       NULL },
 };
 
 /* key definitions */
@@ -75,20 +76,22 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_Left,   setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_Right,  setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_comma,  setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_period, setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
-	{ MODKEY,                       XK_Up,     moveresize,     {.v = "0x -25y 0w 0h" } },
-	{ MODKEY,                       XK_Right,  moveresize,     {.v = "25x 0y 0w 0h" } },
-	{ MODKEY,                       XK_Left,   moveresize,     {.v = "-25x 0y 0w 0h" } },
+	{ MODKEY,                       XK_Down,   moveresize,     {.v = "0x 50y 0w 0h" } },
+	{ MODKEY,                       XK_Up,     moveresize,     {.v = "0x -50y 0w 0h" } },
+	{ MODKEY,                       XK_Right,  moveresize,     {.v = "50x 0y 0w 0h" } },
+	{ MODKEY,                       XK_Left,   moveresize,     {.v = "-50x 0y 0w 0h" } },
 	{ MODKEY|ShiftMask,             XK_Down,   moveresize,     {.v = "0x 0y 0w 25h" } },
 	{ MODKEY|ShiftMask,             XK_Up,     moveresize,     {.v = "0x 0y 0w -25h" } },
 	{ MODKEY|ShiftMask,             XK_Right,  moveresize,     {.v = "0x 0y 25w 0h" } },
