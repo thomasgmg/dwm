@@ -30,6 +30,20 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
+typedef struct {
+	const char *name;
+	const void *cmd;
+} Sp;
+const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--title=spterm", "--window-height=35", "--window-width=150", NULL };
+// const char *spcmd2[] = {TERMINAL, "--x11-instance-name=tty-clock", "--title=tty-clock", "--window-height=10", "--window-width=38","-e", "tty-clock", NULL };
+// const char *spcmd3[] = {TERMINAL, "--x11-instance-name=spyazi", "--title=spyazi", "--window-height=35", "--window-width=100","-e", "yazi", NULL };
+static Sp scratchpads[] = {
+	/* name          cmd  */
+	{"spterm",      spcmd1},
+	// {"tty-clock",      spcmd2},
+	// {"spyazi",      spcmd3},
+};
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
@@ -38,8 +52,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	/* class      instance      title       tags mask       isfloating   monitor */
+	{ "Gimp",     NULL,         NULL,       0,              1,           -1 },
+	{ NULL,       "spterm",     NULL,       SPTAG(0),       1,           -1 },
+	// { NULL,       "tty-clock",  NULL,       SPTAG(0),       1,           -1 },
+	//    { NULL,       "spyazi",     NULL,       SPTAG(0),       1,           -1 }
 };
 
 /* layout(s) */
@@ -100,7 +117,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_comma,  setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_period, setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY|ControlMask,           XK_u,      incrgaps,       {.i = +1 } },
 	{ MODKEY|ControlMask|ShiftMask, XK_u,      incrgaps,       {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_i,      incrigaps,      {.i = +1 } },
@@ -125,7 +142,6 @@ static const Key keys[] = {
     { MODKEY|ControlMask,           XK_m,      layoutmenu,     {0} },
 	{ MODKEY|ControlMask,		    XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_Down,   moveresize,     {.v = "0x 50y 0w 0h" } },
 	{ MODKEY,                       XK_Up,     moveresize,     {.v = "0x -50y 0w 0h" } },
@@ -149,6 +165,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_l,      focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_h,      tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_l,      tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_Return, togglescratch,  {.ui = 0 } },
+	// { MODKEY|ControlMask,           XK_t,      togglescratch,  {.ui = 1 } },
+	// { MODKEY|ControlMask,           XK_y,      togglescratch,  {.ui = 2 } },
 	{ MODKEY,                       XK_x,      movecenter,     {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
@@ -172,7 +191,7 @@ static const Button buttons[] = {
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,         Button1,        resizemouse,    {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
