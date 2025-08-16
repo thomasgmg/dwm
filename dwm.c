@@ -226,6 +226,7 @@ static void motionnotify(XEvent *e);
 static void moveresize(const Arg *arg);
 static void moveresizeedge(const Arg *arg);
 static void movemouse(const Arg *arg);
+static void movecenter(const Arg *arg);
 static Client *nexttiled(Client *c);
 static void pop(Client *c);
 static void propertynotify(XEvent *e);
@@ -1171,22 +1172,21 @@ void killclient(const Arg *arg) {
   }
 }
 
-void
-layoutmenu(const Arg *arg) {
-	FILE *p;
-	char c[10], *s;
-	int i;
+void layoutmenu(const Arg *arg) {
+  FILE *p;
+  char c[10], *s;
+  int i;
 
-	if (!(p = popen(layoutmenu_cmd, "r")))
-		 return;
-	s = fgets(c, sizeof(c), p);
-	pclose(p);
+  if (!(p = popen(layoutmenu_cmd, "r")))
+    return;
+  s = fgets(c, sizeof(c), p);
+  pclose(p);
 
-	if (!s || *s == '\0' || c[0] == '\0')
-		 return;
+  if (!s || *s == '\0' || c[0] == '\0')
+    return;
 
-	i = atoi(c);
-	setlayout(&((Arg) { .v = &layouts[i] }));
+  i = atoi(c);
+  setlayout(&((Arg){.v = &layouts[i]}));
 }
 
 void manage(Window w, XWindowAttributes *wa) {
@@ -1352,6 +1352,16 @@ void movemouse(const Arg *arg) {
     sendmon(c, m);
     selmon = m;
     focus(NULL);
+  }
+}
+
+void movecenter(const Arg *arg) {
+  if (selmon->sel) {
+    selmon->sel->x =
+        selmon->sel->mon->mx + (selmon->sel->mon->mw - WIDTH(selmon->sel)) / 2;
+    selmon->sel->y =
+        selmon->sel->mon->my + (selmon->sel->mon->mh - HEIGHT(selmon->sel)) / 2;
+    arrange(selmon);
   }
 }
 
