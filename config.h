@@ -86,7 +86,6 @@ static const Layout layouts[] = {
 	{ ":::",      gaplessgrid },
 	{ "|M|",      centeredmaster },
 	{ "<M>",      centeredfloatingmaster },
-	{ " 󰏝 ",      NULL },    /* no layout function means floating behavior */
 	{ NULL,       NULL },
 };
 
@@ -140,7 +139,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[14]} },
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
     { MODKEY|ControlMask,           XK_m,      layoutmenu,     {0} },
 	{ MODKEY|ControlMask,		    XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
