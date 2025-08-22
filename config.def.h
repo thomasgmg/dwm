@@ -37,13 +37,13 @@ typedef struct {
 	const void *cmd;
 } Sp;
 const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--title=spterm", "--window-height=35", "--window-width=150", NULL };
-// const char *spcmd2[] = {TERMINAL, "--x11-instance-name=tty-clock", "--title=tty-clock", "--window-height=10", "--window-width=38","-e", "tty-clock", NULL };
-// const char *spcmd3[] = {TERMINAL, "--x11-instance-name=spyazi", "--title=spyazi", "--window-height=35", "--window-width=100","-e", "yazi", NULL };
+static const char *spcmd2[] = {TERMINAL, "--x11-instance-name=spyazi", "--title=spyazi", "--window-height=35", "--window-width=150", "-e", "yazi", NULL };
+static const char *spcmd3[] = {TERMINAL, "--x11-instance-name=spclock", "--title=clock", "--window-height=10", "--window-width=38", "-e", "tty-clock", NULL };
 static Sp scratchpads[] = {
-	/* name          cmd  */
-	{"spterm",      spcmd1},
-	// {"tty-clock",      spcmd2},
-	// {"spyazi",      spcmd3},
+	/*    name           cmd  */
+	{"spterm",spcmd1},
+    {"spyazi",spcmd2},
+    {"spclock",spcmd3},
 };
 
 /* tagging */
@@ -57,8 +57,8 @@ static const Rule rules[] = {
 	/* class      instance      title       tags mask       isfloating   monitor */
 	{ "Gimp",     NULL,         NULL,       0,              1,           -1 },
 	{ NULL,       "spterm",     NULL,       SPTAG(0),       1,           -1 },
-	// { NULL,       "tty-clock",  NULL,       SPTAG(0),       1,           -1 },
-	//    { NULL,       "spyazi",     NULL,       SPTAG(0),       1,           -1 }
+    { NULL,       "spyazi",     NULL,       SPTAG(1),       1,           -1 },
+    { NULL,       "spclock",    NULL,       SPTAG(2),       1,           -1 },
 };
 
 /* layout(s) */
@@ -167,8 +167,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_h,      tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_l,      tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_Return, togglescratch,  {.ui = 0 } },
-	// { MODKEY|ControlMask,           XK_t,      togglescratch,  {.ui = 1 } },
-	// { MODKEY|ControlMask,           XK_y,      togglescratch,  {.ui = 2 } },
+    { MODKEY,                       XK_y,      togglescratch,  {.ui = 1 } },
+    { MODKEY|ControlMask,           XK_t,      togglescratch,  {.ui = 2 } },
 	{ MODKEY,                       XK_x,      movecenter,     {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
