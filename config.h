@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 #include <X11/X.h>
 #define BROWSER "firefox"
-#define TERMINAL "ghostty"
+#define TERMINAL "kitty"
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -36,14 +36,16 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--title=spterm", "--window-height=35", "--window-width=150", NULL };
-static const char *spcmd2[] = {TERMINAL, "--x11-instance-name=spyazi", "--title=spyazi", "--window-height=35", "--window-width=150", "-e", "yazi", NULL };
-static const char *spcmd3[] = {TERMINAL, "--x11-instance-name=spclock", "--title=clock", "--window-height=10", "--window-width=38", "-e", "tty-clock", NULL };
+// const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--title=spterm", "--window-height=35", "--window-width=150", NULL };
+// static const char *spcmd3[] = {TERMINAL, "--x11-instance-name=spclock", "--title=clock", "--window-height=10", "--window-width=38", "-e", "tty-clock", NULL };
+static const char *spcmd1[] = {TERMINAL, "--name", "spterm", "--title", "spterm", NULL };
+static const char *spcmd2[] = {"ghostty", "--x11-instance-name=spfm", "--title=spfm", "--window-height=35", "--window-width=150", "-e", "yazi", NULL };
+static const char *spcmd3[] = {TERMINAL, "--name", "tty-clock", "-e", "tty-clock", NULL };
 static Sp scratchpads[] = {
 	/*    name           cmd  */
 	{"spterm",spcmd1},
-    {"spyazi",spcmd2},
-    {"spclock",spcmd3},
+    {"spfm",spcmd2},
+    {"tty-clock",spcmd3},
 };
 
 /* tagging */
@@ -57,8 +59,8 @@ static const Rule rules[] = {
 	/* class      instance      title       tags mask       isfloating   monitor */
 	{ "Gimp",     NULL,         NULL,       0,              1,           -1 },
 	{ NULL,       "spterm",     NULL,       SPTAG(0),       1,           -1 },
-    { NULL,       "spyazi",     NULL,       SPTAG(1),       1,           -1 },
-    { NULL,       "spclock",    NULL,       SPTAG(2),       1,           -1 },
+	{ NULL,       "spfm",       NULL,       SPTAG(1),       1,           -1 },
+	{ NULL,       "tty-clock",  NULL,       SPTAG(2),       1,           -1 },
 };
 
 /* layout(s) */
@@ -103,7 +105,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "ghostty", NULL };
+static const char *termcmd[]  = { TERMINAL, NULL };
 static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 static const Key keys[] = {
