@@ -186,16 +186,15 @@ static const Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	/* { ClkLtSymbol,       0,              Button1,        setlayout,      {0} }, */
-	{ ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button1,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+	{ ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} }, /* spawn layoutmenu by clicking on the layout icon */
+    { ClkWinTitle,          0,              Button3,        spawn,          {.v = (const char *[]){BROWSER, NULL}}}, /* spawn browser by clicking on the window title area */
+	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } }, /* spawn terminal by clicking on dwmblocks */
+	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} }, /* resize window with mouse by clicking on window */
+	{ ClkClientWin,         MODKEY,         Button1,        resizemouse,    {0} }, /* resize window with mouse by clicking on window */
+	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} }, /* toggle floating by clicking on window */
+	{ ClkTagBar,            0,              Button1,        view,           {0} }, /* go to selected tag */
+	{ ClkTagBar,            0,              Button3,        toggleview,     {0} }, /* show clients of selected tag in your current tag */
+	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} }, /* move client to selected tag */
+	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} }, /* send client to selected tag and also keep it in your current tag */
 };
 
