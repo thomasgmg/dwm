@@ -1,7 +1,9 @@
 /* See LICENSE file for copyright and license details. */
 #include <X11/X.h>
 #define BROWSER "firefox"
+#define THUNAR "thunar"
 #define TERMINAL "kitty"
+#define GHOSTTY "ghostty"
 
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
@@ -40,8 +42,8 @@ typedef struct {
 // const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--title=spterm", "--window-height=35", "--window-width=150", NULL };
 // static const char *spcmd3[] = {TERMINAL, "--x11-instance-name=spclock", "--title=clock", "--window-height=10", "--window-width=38", "-e", "tty-clock", NULL };
 static const char *spcmd1[] = {TERMINAL, "--name", "spterm", "--title", "spterm", NULL };
-static const char *spcmd2[] = {"ghostty", "--x11-instance-name=spfm", "--title=spfm", "--window-height=35", "--window-width=150", "-e", "yazi", NULL };
-static const char *spcmd3[] = {TERMINAL, "--name", "tty-clock", "-e", "tty-clock", NULL };
+static const char *spcmd2[] = {GHOSTTY, "--x11-instance-name=spfm", "--title=spfm", "--window-height=35", "--window-width=150", "-e", "yazi", NULL };
+static const char *spcmd3[] = {GHOSTTY, "--x11-instance-name=tty-clock", "--title=tty-clock", "--window-height=10", "--window-width=38", "-e", "tty-clock", NULL };
 static Sp scratchpads[] = {
 	/*    name           cmd  */
 	{"spterm",spcmd1},
@@ -107,13 +109,17 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { TERMINAL, NULL };
+static const char *webcmd[]  = { BROWSER, NULL };
+static const char *fmcmd[]  = { THUNAR, NULL };
 static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	/*{ MODKEY,                     XK_p,      spawn,          {.v = dmenucmd } },*/
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-    { MODKEY,                       XK_w,      spawn,          {.v = (const char *[]){BROWSER, NULL}}},
+    // { MODKEY,                       XK_w,      spawn,          {.v = (const char *[]){BROWSER, NULL}}},
+    { MODKEY,                       XK_w,      spawn,          {.v = webcmd } },
+    { MODKEY|ShiftMask,             XK_y,      spawn,          {.v = fmcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
