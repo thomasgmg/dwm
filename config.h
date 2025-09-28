@@ -113,6 +113,7 @@ static const char *webcmd[]  = { BROWSER, NULL };
 static const char *fmcmd[]  = { THUNAR, NULL };
 static const char *layoutmenu_cmd = "layoutmenu.sh";
 
+#include "movestack.c"
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	/*{ MODKEY,                     XK_p,      spawn,          {.v = dmenucmd } },*/
@@ -127,6 +128,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_comma,  setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_period, setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY|ControlMask,           XK_u,      incrgaps,       {.i = +1 } },
 	{ MODKEY|ControlMask|ShiftMask, XK_u,      incrgaps,       {.i = -1 } },
