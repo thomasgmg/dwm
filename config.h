@@ -40,8 +40,6 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-// const char *spcmd1[] = {TERMINAL, "--x11-instance-name=spterm", "--title=spterm", "--window-height=35", "--window-width=150", NULL };
-// static const char *spcmd3[] = {TERMINAL, "--x11-instance-name=spclock", "--title=clock", "--window-height=10", "--window-width=38", "-e", "tty-clock", NULL };
 static const char *spcmd1[] = {TERMINAL, "--name", "spterm", "--title", "spterm", NULL };
 static const char *spcmd2[] = {GHOSTTY, "--x11-instance-name=spfm", "--title=spfm", "--window-height=35", "--window-width=150", "-e", "yazi", NULL };
 static const char *spcmd3[] = {GHOSTTY, "--x11-instance-name=tty-clock", "--title=tty-clock", "--window-height=10", "--window-width=38", "-e", "tty-clock", NULL };
