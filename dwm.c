@@ -68,7 +68,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel };                  /* color schemes */
+enum { SchemeNorm, SchemeInv, SchemeSel };       /* color schemes */
 enum {
   NetSupported,
   NetWMName,
@@ -816,8 +816,13 @@ void drawbar(Monitor *m) {
     if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
       continue;
     w = TEXTW(tags[i]);
-    drw_setscheme(
-        drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
+    if (m == selmon) {
+      drw_setscheme(
+          drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
+    } else {
+      drw_setscheme(
+          drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeInv : SchemeNorm]);
+    }
     drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
     if (occ & 1 << i)
       drw_rect(drw, x + boxs, boxs, boxw, boxw,
@@ -831,7 +836,7 @@ void drawbar(Monitor *m) {
 
   if ((w = m->ww - tw - x) > bh) {
     if (m->sel) {
-      drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+      drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeInv]);
       drw_text(drw, x, 0, w - 2 * sp, bh,
                lrpad / 2 + (m->sel->icon ? m->sel->icw + ICONSPACING : 0),
                m->sel->name, 0);

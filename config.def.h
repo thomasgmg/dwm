@@ -30,6 +30,7 @@ static const char col_border[]      = "#00ffff";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_border },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
