@@ -27,11 +27,25 @@ static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_border[]      = "#00ffff";
+static const char col_inv[]         = "#ffe4e1";
+static const char col_salmon[]      = "#f08080";
+static const char col_borderpink[]  = "#ffa0ad";
+
+/* solarized colors http://ethanschoonover.com/solarized */
+static const char s_base03[]        = "#002b36";
+static const char s_base02[]        = "#073642";
+static const char s_base01[]        = "#586e75";
+static const char s_base00[]        = "#657b83";
+static const char s_base0[]         = "#839496";
+static const char s_base1[]         = "#93a1a1";
+static const char s_base2[]         = "#eee8d5";
+static const char s_base3[]         = "#fdf6e3";
+
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeInv]  = { col_gray1, col_gray3, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_border },
+	/*               fg         bg          border   */
+	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeSel]  = { col_gray1, col_salmon, col_borderpink },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
@@ -51,7 +65,8 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "󰖟", "", "", ""};
+// static const char *tags[] = { "", "󰖟", "", "", ""};
+static const char *tags[] = { "1", "2", "3", "4", "5"};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -108,6 +123,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { TERMINAL, NULL };
+static const char *ghosttycmd[]  = { GHOSTTY, NULL };
 static const char *webcmd[]  = { BROWSER, NULL };
 static const char *fmcmd[]  = { THUNAR, NULL };
 static const char *layoutmenu_cmd = "layoutmenu.sh";
@@ -117,7 +133,7 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	/*{ MODKEY,                     XK_p,      spawn,          {.v = dmenucmd } },*/
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-    // { MODKEY,                       XK_w,      spawn,          {.v = (const char *[]){BROWSER, NULL}}},
+	{ MODKEY|ShiftMask,             XK_g,      spawn,          {.v = ghosttycmd } },
     { MODKEY,                       XK_w,      spawn,          {.v = webcmd } },
     { MODKEY|ShiftMask,             XK_y,      spawn,          {.v = fmcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
