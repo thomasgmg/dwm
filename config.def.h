@@ -32,7 +32,7 @@ static const char col_cyan[]        = "#005577";
 static const char col_border[]      = "#00ffff";
 static const char col_inv[]         = "#ffe4e1";
 static const char col_salmon[]      = "#f08080";
-static const char col_hotpink[]      = "#ff69b4";
+static const char col_hotpink[]     = "#ff69b4";
 static const char col_borderpink[]  = "#ffa0ad";
 
 /* solarized colors http://ethanschoonover.com/solarized */
@@ -45,15 +45,33 @@ static const char s_base1[]         = "#93a1a1";
 static const char s_base2[]         = "#eee8d5";
 static const char s_base3[]         = "#fdf6e3";
 
-static const char *colors[][3]      = {
+static const char *colors[][SchemeN][3]      = {
 	/*               fg         bg          border   */
+    { /* Normal colorscheme light (use with wallhaven wall) */
 	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
 	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
-	// [SchemeSel]  = { col_gray4, col_cyan, col_border }, /* blue colorscheme */
-	[SchemeSel]  = { col_black, col_cyan, col_border }, /* blue colorscheme with dark text */
-	// [SchemeSel]  = { col_gray4, col_black, col_borderpink },
-	// [SchemeSel]  = { col_gray1, col_hotpink, col_borderpink },
-	// [SchemeSel]  = { col_gray1, col_salmon, col_borderpink },
+	[SchemeSel]  = { col_gray4, col_cyan, col_border },
+    },
+    { /* Normal colorscheme dark (use with wallhaven-kumar or wallhaven-DragonTemple wall) */
+	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeSel]  = { col_black, col_cyan, col_border },
+    },
+    { /* Light pink theme (use with Shadows wall) */
+	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeSel]  = { col_gray1, col_salmon, col_borderpink },
+    },
+    { /* Hotpink theme (the following two colorschemes can be used with wallhaven-kanji wall) */
+	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeSel]  = { col_gray1, col_hotpink, col_borderpink },
+    },
+    { /* Black theme (use with Red_Eclipse wall) */
+	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeSel]  = { col_gray4, col_black, col_borderpink },
+    },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
@@ -139,6 +157,11 @@ static const char *layoutmenu_cmd = "layoutmenu.sh";
 static const char *volupcmd[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "0.05+", NULL };   
 static const char *voldowncmd[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "0.05-", NULL };
 static const char *volmutecmd[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
+static const char *wall1cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven.jpg", NULL };
+static const char *wall2cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-DragonTemple.jpg", NULL };
+static const char *wall3cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Shadows.png", NULL };
+static const char *wall4cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-kanji.jpg", NULL };
+static const char *wall5cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Red_Eclipse.png", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
@@ -146,6 +169,11 @@ static const Key keys[] = {
     { 0,                            XF86XK_AudioRaiseVolume, spawn,          {.v = volupcmd } },
     { 0,                            XF86XK_AudioLowerVolume, spawn,          {.v = voldowncmd } },
     { 0,                            XF86XK_AudioMute,        spawn,          {.v = volmutecmd } },
+    { MODKEY,                       XK_F1,                   spawn,          {.v = wall1cmd } },
+    { MODKEY,                       XK_F2,                   spawn,          {.v = wall2cmd } },
+    { MODKEY,                       XK_F3,                   spawn,          {.v = wall3cmd } },
+    { MODKEY,                       XK_F4,                   spawn,          {.v = wall4cmd } },
+    { MODKEY,                       XK_F5,                   spawn,          {.v = wall5cmd } },
 	/*{ MODKEY,                     XK_p,                    spawn,          {.v = dmenucmd } },*/
 	{ MODKEY|ShiftMask,             XK_Return,               spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_g,                    spawn,          {.v = ghosttycmd } },
@@ -161,22 +189,22 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_j,                    movestack,      {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,                    movestack,      {.i = -1 } },
 	{ MODKEY,                       XK_space,                zoom,           {0} },
-	{ MODKEY|ControlMask,           XK_u,                    incrgaps,       {.i = +1 } },
-	{ MODKEY|ControlMask|ShiftMask, XK_u,                    incrgaps,       {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_i,                    incrigaps,      {.i = +1 } },
-	{ MODKEY|ControlMask|ShiftMask, XK_i,                    incrigaps,      {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_o,                    incrogaps,      {.i = +1 } },
-	{ MODKEY|ControlMask|ShiftMask, XK_o,                    incrogaps,      {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_6,                    incrihgaps,     {.i = +1 } },
-	{ MODKEY|ControlMask|ShiftMask, XK_6,                    incrihgaps,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_7,                    incrivgaps,     {.i = +1 } },
-	{ MODKEY|ControlMask|ShiftMask, XK_7,                    incrivgaps,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_8,                    incrohgaps,     {.i = +1 } },
-	{ MODKEY|ControlMask|ShiftMask, XK_8,                    incrohgaps,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_9,                    incrovgaps,     {.i = +1 } },
-	{ MODKEY|ControlMask|ShiftMask, XK_9,                    incrovgaps,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_0,                    togglegaps,     {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_0,                    defaultgaps,    {0} },
+	{ MODKEY|Mod1Mask,              XK_u,                    incrgaps,       {.i = +1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_u,                    incrgaps,       {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_i,                    incrigaps,      {.i = +1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_i,                    incrigaps,      {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_o,                    incrogaps,      {.i = +1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_o,                    incrogaps,      {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_6,                    incrihgaps,     {.i = +1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_6,                    incrihgaps,     {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_7,                    incrivgaps,     {.i = +1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_7,                    incrivgaps,     {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_8,                    incrohgaps,     {.i = +1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_8,                    incrohgaps,     {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_9,                    incrovgaps,     {.i = +1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_9,                    incrovgaps,     {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_0,                    togglegaps,     {0} },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,                    defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,                  view,           {0} },
 	{ MODKEY,                       XK_q,                    killclient,     {0} },
 	{ MODKEY,                       XK_t,                    setlayout,      {.v = &layouts[0]} },
@@ -208,6 +236,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_l,                    focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_h,                    tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_l,                    tagmon,         {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_s,                    setscheme,      {.i = +1 } },
 	{ MODKEY,                       XK_Return,               togglescratch,  {.ui = 0 } },
     { MODKEY,                       XK_y,                    togglescratch,  {.ui = 1 } },
     { MODKEY|ControlMask,           XK_t,                    togglescratch,  {.ui = 2 } },
