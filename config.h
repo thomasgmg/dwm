@@ -31,9 +31,12 @@ static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_border[]      = "#00ffff";
 static const char col_inv[]         = "#ffe4e1";
-static const char col_salmon[]      = "#f08080";
+static const char col_coral[]       = "#f08080";
 static const char col_hotpink[]     = "#ff69b4";
 static const char col_borderpink[]  = "#ffa0ad";
+static const char col_blood[]       = "#dc143c";
+static const char col_maroon[]      = "#800000";
+static const char col_gold[]        = "#ffd700";
 
 /* solarized colors http://ethanschoonover.com/solarized */
 static const char s_base03[]        = "#002b36";
@@ -60,17 +63,32 @@ static const char *colors[][SchemeN][3]      = {
     { /* Light pink theme (use with Shadows wall) */
 	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
 	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
-	[SchemeSel]  = { col_gray1, col_salmon, col_borderpink },
+	[SchemeSel]  = { col_gray1, col_coral, col_borderpink },
     },
-    { /* Hotpink theme (the following two colorschemes can be used with wallhaven-kanji wall) */
+    { /* Hotpink theme (use this with wallhaven-kanji wall) */
 	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
 	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
 	[SchemeSel]  = { col_gray1, col_hotpink, col_borderpink },
     },
-    { /* Black theme (use with Red_Eclipse wall) */
+    { /* Dark theme (use this with wallhaven-kanji or storm wall) */
 	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
 	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
 	[SchemeSel]  = { col_gray4, col_black, col_borderpink },
+    },
+    { /* Red theme (use with storm or TacoSauceNinja wall) */
+	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeSel]  = { col_gray4, col_maroon, col_borderpink },
+    },
+    { /* Dark bloody theme (use with wallhaven-CrimsonInvasion or TacoSauceNinja wall) */
+	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeSel]  = { col_blood, col_black, col_black },
+    },
+    { /* Golden theme (use this with wallhaven-LordOfRings wall) */
+	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeSel]  = { col_gold, col_black, col_black },
     },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
@@ -161,7 +179,10 @@ static const char *wall1cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/
 static const char *wall2cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-DragonTemple.jpg", NULL };
 static const char *wall3cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Shadows.png", NULL };
 static const char *wall4cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-kanji.jpg", NULL };
-static const char *wall5cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Red_Eclipse.png", NULL };
+static const char *wall5cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/storm.jpg", NULL };
+static const char *wall6cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-CrimsonInvasion.jpg", NULL };
+static const char *wall7cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-LordOfRings.jpg", NULL };
+static const char *wall8cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-TacoSauceNinja.png", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
@@ -174,6 +195,9 @@ static const Key keys[] = {
     { MODKEY,                       XK_F3,                   spawn,          {.v = wall3cmd } },
     { MODKEY,                       XK_F4,                   spawn,          {.v = wall4cmd } },
     { MODKEY,                       XK_F5,                   spawn,          {.v = wall5cmd } },
+    { MODKEY,                       XK_F6,                   spawn,          {.v = wall6cmd } },
+    { MODKEY,                       XK_F7,                   spawn,          {.v = wall7cmd } },
+    { MODKEY,                       XK_F8,                   spawn,          {.v = wall8cmd } },
 	/*{ MODKEY,                     XK_p,                    spawn,          {.v = dmenucmd } },*/
 	{ MODKEY|ShiftMask,             XK_Return,               spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_g,                    spawn,          {.v = ghosttycmd } },
