@@ -29,6 +29,7 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
+static const char col_darkcyan[]    = "#1f4450";
 static const char col_border[]      = "#00ffff";
 static const char col_inv[]         = "#ffe4e1";
 static const char col_coral[]       = "#f08080";
@@ -36,7 +37,9 @@ static const char col_hotpink[]     = "#ff69b4";
 static const char col_borderpink[]  = "#ffa0ad";
 static const char col_blood[]       = "#dc143c";
 static const char col_maroon[]      = "#800000";
+static const char col_crimson[]     = "#dc143c";
 static const char col_gold[]        = "#ffd700";
+static const char col_goldenrod[]   = "#daa520";
 
 /* solarized colors http://ethanschoonover.com/solarized */
 static const char s_base03[]        = "#002b36";
@@ -82,13 +85,18 @@ static const char *colors[][SchemeN][3]      = {
     },
     { /* Dark bloody theme (use with wallhaven-CrimsonInvasion or TacoSauceNinja wall) */
 	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
-	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeInv]  = { col_black, col_darkcyan,  col_black },
 	[SchemeSel]  = { col_blood, col_black, col_black },
     },
     { /* Golden theme (use this with wallhaven-LordOfRings wall) */
 	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
-	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_goldenrod,  col_gray2 },
 	[SchemeSel]  = { col_gold, col_black, col_black },
+    },
+    { /* Red theme (use with Red-Foliage-Temple-Japanese-Art-Wallpaper wall) */
+	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeSel]  = { col_gray2, col_crimson, col_borderpink },
     },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
@@ -109,9 +117,9 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-// static const char *tags[] = { "", "󰖟", "", "", ""};
+static const char *tags[] = { "", "󰖟", "", "", ""};
 // static const char *tags[] = { "1", "2", "3", "4", "5"};
-static const char *tags[] = { "I", "II", "III", "IV", "V"};
+// static const char *tags[] = { "I", "II", "III", "IV", "V"};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -183,6 +191,7 @@ static const char *wall5cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/
 static const char *wall6cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-CrimsonInvasion.jpg", NULL };
 static const char *wall7cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-LordOfRings.jpg", NULL };
 static const char *wall8cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-TacoSauceNinja.png", NULL };
+static const char *wall9cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Red-Foliage-Temple-Japanese-Art-Wallpaper.jpg", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
@@ -198,6 +207,7 @@ static const Key keys[] = {
     { MODKEY,                       XK_F6,                   spawn,          {.v = wall6cmd } },
     { MODKEY,                       XK_F7,                   spawn,          {.v = wall7cmd } },
     { MODKEY,                       XK_F8,                   spawn,          {.v = wall8cmd } },
+    { MODKEY,                       XK_F9,                   spawn,          {.v = wall9cmd } },
 	/*{ MODKEY,                     XK_p,                    spawn,          {.v = dmenucmd } },*/
 	{ MODKEY|ShiftMask,             XK_Return,               spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_g,                    spawn,          {.v = ghosttycmd } },
