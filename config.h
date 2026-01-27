@@ -40,6 +40,8 @@ static const char col_maroon[]      = "#800000";
 static const char col_crimson[]     = "#dc143c";
 static const char col_gold[]        = "#ffd700";
 static const char col_goldenrod[]   = "#daa520";
+static const char col_rosybrown[]   = "#bc8f8f";
+static const char col_borderwheat[] = "#f5deb3";
 
 /* solarized colors http://ethanschoonover.com/solarized */
 static const char s_base03[]        = "#002b36";
@@ -98,6 +100,11 @@ static const char *colors[][SchemeN][3]      = {
 	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
 	[SchemeSel]  = { col_gray2, col_crimson, col_borderpink },
     },
+    { /* Pastel theme (use with witch wall) */
+	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeSel]  = { col_black, col_rosybrown, col_borderwheat },
+    },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb    = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
@@ -117,7 +124,8 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "󰖟", "", "", ""};
+// static const char *tags[] = { "", "󰖟", "", "", ""};
+static const char *tags[] = { "α", "β", "γ", "δ", "ε"};
 // static const char *tags[] = { "1", "2", "3", "4", "5"};
 // static const char *tags[] = { "I", "II", "III", "IV", "V"};
 
@@ -192,6 +200,7 @@ static const char *wall6cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/
 static const char *wall7cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-LordOfRings.jpg", NULL };
 static const char *wall8cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-TacoSauceNinja.png", NULL };
 static const char *wall9cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Red-Foliage-Temple-Japanese-Art-Wallpaper.jpg", NULL };
+static const char *wall10cmd[] = { "feh", "--bg-scale", "/home/thomas/aadritobasu-walls/witch.jpg", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
@@ -208,6 +217,7 @@ static const Key keys[] = {
     { MODKEY,                       XK_F7,                   spawn,          {.v = wall7cmd } },
     { MODKEY,                       XK_F8,                   spawn,          {.v = wall8cmd } },
     { MODKEY,                       XK_F9,                   spawn,          {.v = wall9cmd } },
+    { MODKEY,                       XK_F10,                  spawn,          {.v = wall10cmd } },
 	/*{ MODKEY,                     XK_p,                    spawn,          {.v = dmenucmd } },*/
 	{ MODKEY|ShiftMask,             XK_Return,               spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_g,                    spawn,          {.v = ghosttycmd } },
