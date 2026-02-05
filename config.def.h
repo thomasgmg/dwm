@@ -21,8 +21,12 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 #define ICONSPACING (bh -4) /* space between icon and title */
 static const int vertpad            = 10;        /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
-static const char *fonts[]          = { "monospace:size=11" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { "BaksoSapi:size=13"};
+// static const char *fonts[]       = { "monospace:size=13" };
+// static const char *fonts[]       = { "BlackKnight:size=13" };
+// static const char *fonts[]       = { "JetBrainsMono Nerd Font:size=13" };
+// static const char *fonts[]       = { "RobloxFont:size=13" };
+static const char dmenufont[]       = "monospace:size=12";
 static const char col_black[]       = "#000000";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -103,7 +107,7 @@ static const char *colors[][SchemeN][3]      = {
     { /* Pastel theme (use with witch wall) */
 	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
 	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
-	[SchemeSel]  = { col_black, col_rosybrown, col_borderwheat },
+	[SchemeSel]  = { col_black, col_rosybrown, col_black },
     },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
@@ -125,8 +129,8 @@ static Sp scratchpads[] = {
 
 /* tagging */
 // static const char *tags[] = { "", "󰖟", "", "", ""};
-static const char *tags[] = { "α", "β", "γ", "δ", "ε"};
-// static const char *tags[] = { "1", "2", "3", "4", "5"};
+// static const char *tags[] = { "α", "β", "π", "δ", "ε"};
+static const char *tags[] = { "1", "2", "3", "4", "5"};
 // static const char *tags[] = { "I", "II", "III", "IV", "V"};
 
 static const Rule rules[] = {
@@ -191,16 +195,16 @@ static const char *layoutmenu_cmd = "layoutmenu.sh";
 static const char *volupcmd[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "0.05+", NULL };   
 static const char *voldowncmd[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "0.05-", NULL };
 static const char *volmutecmd[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
-static const char *wall1cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven.jpg", NULL };
+static const char *wall1cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Wallhaven.jpg", NULL };
 static const char *wall2cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-DragonTemple.jpg", NULL };
 static const char *wall3cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Shadows.png", NULL };
-static const char *wall4cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-kanji.jpg", NULL };
-static const char *wall5cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/storm.jpg", NULL };
+static const char *wall4cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-Kanji.jpg", NULL };
+static const char *wall5cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Storm.jpg", NULL };
 static const char *wall6cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-CrimsonInvasion.jpg", NULL };
 static const char *wall7cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-LordOfRings.jpg", NULL };
 static const char *wall8cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-TacoSauceNinja.png", NULL };
-static const char *wall9cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Red-Foliage-Temple-Japanese-Art-Wallpaper.jpg", NULL };
-static const char *wall10cmd[] = { "feh", "--bg-scale", "/home/thomas/aadritobasu-walls/witch.jpg", NULL };
+static const char *wall9cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/RedFoliageTempleJapaneseArtWallpaper.jpg", NULL };
+static const char *wall10cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Witch.jpg", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
