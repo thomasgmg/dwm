@@ -46,6 +46,7 @@ static const char col_gold[]        = "#ffd700";
 static const char col_goldenrod[]   = "#daa520";
 static const char col_rosybrown[]   = "#bc8f8f";
 static const char col_borderwheat[] = "#f5deb3";
+static const char col_gradient[]    = "#b5a575";
 
 /* solarized colors http://ethanschoonover.com/solarized */
 static const char s_base03[]        = "#002b36";
@@ -108,6 +109,11 @@ static const char *colors[][SchemeN][3]      = {
 	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
 	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
 	[SchemeSel]  = { col_black, col_rosybrown, col_black },
+    },
+    { /* Green-Pastel theme (use with wallhaven-YuanJun wall) */
+	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
+	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
+	[SchemeSel]  = { col_black, col_gradient, col_black },
     },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
