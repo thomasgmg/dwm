@@ -46,7 +46,8 @@ static const char col_gold[]        = "#ffd700";
 static const char col_goldenrod[]   = "#daa520";
 static const char col_rosybrown[]   = "#bc8f8f";
 static const char col_borderwheat[] = "#f5deb3";
-static const char col_gradient[]    = "#b5a575";
+static const char col_gainsboro[]   = "#fcdeb2";
+static const char col_dimgray[]     = "#696969";
 
 /* solarized colors http://ethanschoonover.com/solarized */
 static const char s_base03[]        = "#002b36";
@@ -110,10 +111,10 @@ static const char *colors[][SchemeN][3]      = {
 	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
 	[SchemeSel]  = { col_black, col_rosybrown, col_black },
     },
-    { /* Green-Pastel theme (use with wallhaven-YuanJun wall) */
+    { /* Gray theme (use with Kojiro wall) */
 	[SchemeNorm] = { col_gray3, col_gray1,  col_gray2 },
-	[SchemeInv]  = { col_gray1, col_gray3,  col_gray2 },
-	[SchemeSel]  = { col_black, col_gradient, col_black },
+	[SchemeInv]  = { col_dimgray, col_gainsboro,  col_gray2 },
+	[SchemeSel]  = { col_gainsboro, col_dimgray, col_black },
     },
 };
 static const XPoint stickyicon[]    = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
@@ -192,25 +193,25 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { TERMINAL, NULL };
-static const char *ghosttycmd[]  = { GHOSTTY, NULL };
-static const char *webcmd[]  = { BROWSER, NULL };
-static const char *fmcmd[]  = { THUNAR, NULL };
+static const char *dmenucmd[]     = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *termcmd[]      = { TERMINAL, NULL };
+static const char *ghosttycmd[]   = { GHOSTTY, NULL };
+static const char *webcmd[]       = { BROWSER, NULL };
+static const char *fmcmd[]        = { THUNAR, NULL };
 static const char *layoutmenu_cmd = "layoutmenu.sh";
-static const char *volupcmd[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "0.05+", NULL };   
-static const char *voldowncmd[] = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "0.05-", NULL };
-static const char *volmutecmd[] = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
-static const char *wall1cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Wallhaven.jpg", NULL };
-static const char *wall2cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-DragonTemple.jpg", NULL };
-static const char *wall3cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Shadows.png", NULL };
-static const char *wall4cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-Kanji.jpg", NULL };
-static const char *wall5cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Storm.jpg", NULL };
-static const char *wall6cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-CrimsonInvasion.jpg", NULL };
-static const char *wall7cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-LordOfRings.jpg", NULL };
-static const char *wall8cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-TacoSauceNinja.png", NULL };
-static const char *wall9cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/RedFoliageTempleJapaneseArtWallpaper.jpg", NULL };
-static const char *wall10cmd[] = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Witch.jpg", NULL };
+static const char *volupcmd[]     = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "0.05+", NULL };   
+static const char *voldowncmd[]   = { "wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "0.05-", NULL };
+static const char *volmutecmd[]   = { "wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
+static const char *wall1cmd[]     = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Wallhaven.jpg", NULL };
+static const char *wall2cmd[]     = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-DragonTemple.jpg", NULL };
+static const char *wall3cmd[]     = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Shadows.png", NULL };
+static const char *wall4cmd[]     = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-Kanji.jpg", NULL };
+static const char *wall5cmd[]     = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Storm.jpg", NULL };
+static const char *wall6cmd[]     = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-CrimsonInvasion.jpg", NULL };
+static const char *wall7cmd[]     = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-LordOfRings.jpg", NULL };
+static const char *wall8cmd[]     = { "feh", "--bg-scale", "/home/thomas/Wallpapers/wallhaven-TacoSauceNinja.png", NULL };
+static const char *wall9cmd[]     = { "feh", "--bg-scale", "/home/thomas/Wallpapers/RedFoliageTempleJapaneseArtWallpaper.jpg", NULL };
+static const char *wall10cmd[]    = { "feh", "--bg-scale", "/home/thomas/Wallpapers/Witch.jpg", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
@@ -229,8 +230,8 @@ static const Key keys[] = {
     { MODKEY,                       XK_F9,                   spawn,          {.v = wall9cmd } },
     { MODKEY,                       XK_F10,                  spawn,          {.v = wall10cmd } },
 	/*{ MODKEY,                     XK_p,                    spawn,          {.v = dmenucmd } },*/
-	{ MODKEY|ShiftMask,             XK_Return,               spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_g,                    spawn,          {.v = ghosttycmd } },
+	{ MODKEY|ShiftMask,             XK_Return,               spawn,          {.v = ghosttycmd } },
+	{ MODKEY|ControlMask,           XK_k,                    spawn,          {.v = termcmd } },
     { MODKEY,                       XK_w,                    spawn,          {.v = webcmd } },
     { MODKEY|ShiftMask,             XK_y,                    spawn,          {.v = fmcmd } },
 	{ MODKEY,                       XK_b,                    togglebar,      {0} },
